@@ -25,7 +25,7 @@ ul {
   padding: 0;
 }
 
-.transaction-headers {
+.transaction-headers div {
   color: yellow;
   font-weight: 700;
   font-size: calc(4px + 2vmin);
@@ -35,13 +35,23 @@ ul {
   color: aquamarine;
   font-weight: 900;
   font-size: 1.2em;
-  transition-property: color font-weight font-size;
-  transition-duration: 0.5s;
+  transition-property: color, font-weight, font-size;
+  transition-duration: 1s;
+
+  div:first-child {
+    margin-left: 20px;
+    transition-property: margin-left;
+    transition-duration: 1s;
+  }
 
   &.old-trx {
     color: white;
     font-weight: normal;
     font-size: 1em;
+
+    div:first-child {
+      margin-left: 0;
+    }
   }
 }
 
@@ -64,12 +74,16 @@ ul {
   width: 120px;
 }
 
+.tx-n {
+  width: 40px;
+}
+
 .tx-prev {
   width: 50px;
 }
 
 .tx-spent {
-  width: 60px;
+  width: 66px;
 }
 
 .tx-value {

@@ -28,6 +28,7 @@ class App extends React.Component {
   }
 
   subscribe = () => {
+    this.unsubscribe();
     Connect();
     SubscribeTrx();
     GetTrx(this.updateTransactions);
@@ -39,21 +40,18 @@ class App extends React.Component {
     Disconnect();
   }
 
-  markOldX = transactions => {
-    return transactions.map(trx => Object.assign({}, trx, {oldX: true}));
+  markedOldTransactions = (state) => {
+    return state.transactions.map(trx => ({...trx, oldX: true }))
   }
 
   updateTransactions = (data) => {
-      this.setState((state) => {
-        let newTransactions = mergeOuts(data);
-        let oldTransactions = this.markOldX(state.transactions);
-        newTransactions = [].concat(newTransactions, oldTransactions);
-        
-        if (newTransactions.length > this.state.limit) {
-          newTransactions = newTransactions.slice(0, this.state.limit - 1)
-        }
-        return { transactions: newTransactions }
-      });
+    this.setState((state) => {
+      let newTransactions = mergeOuts(data);
+      let allTransactions = newTransactions.concat(this.markedOldTransactions(state));
+      return {
+        transactions: allTransactions.slice(0, state.limit)
+      }
+    });
   }
 
   updateError = (data) => {

@@ -6,17 +6,18 @@ export default function Transactions({ transactions }) {
     <ul className="transaction-list">
       <li className="transaction-headers" key="headers">
         <div className="tx-index">Index</div>
+        <div className="tx-n">N</div>
         <div className="tx-prev">Prev</div>
         <div className="tx-spent">Spent</div>
         <div className="tx-value">Value</div>
       </li>
-      { transactions.map((item, index) => {
-        // console.log(item)
+      { transactions.map((item) => {
+        const key = Math.floor(Math.random() * item.tx_index)
+        console.log(item)
         return (
           <Item
-            key={`${item.tx_index}-${item.value}`}
+            key={key}
             item={item}
-            index={index}
           />
         )
       })}
