@@ -1,0 +1,77 @@
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background-color: grey;
+  height: 3vh;
+  line-height: 3vh;
+
+  button {
+    text-transform: uppercase;
+  }
+}
+
+main {
+  background-color: #282c34;
+  overflow: scroll;
+  height: 97vh;
+}
+
+ul {
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+}
+
+.transaction-headers {
+  color: yellow;
+  font-weight: 700;
+  font-size: calc(4px + 2vmin);
+}
+
+.transaction-list li:not(.transaction-headers) {
+  color: aquamarine;
+  font-weight: 900;
+  font-size: 1.2em;
+  transition-property: color font-weight font-size;
+  transition-duration: 0.5s;
+
+  &.old-trx {
+    color: white;
+    font-weight: normal;
+    font-size: 1em;
+  }
+}
+
+.transaction-headers,
+.transaction-list li {
+  display: table-row;
+}
+
+.transaction-headers div,
+.transaction-list div {
+  display: inline-block;
+}
+
+.transaction-headers div + div,
+.transaction-list div + div {
+  margin-left: 6px;
+}
+
+.tx-index {
+  width: 120px;
+}
+
+.tx-prev {
+  width: 50px;
+}
+
+.tx-spent {
+  width: 60px;
+}
+
+.tx-value {
+  width: 200px;
+}

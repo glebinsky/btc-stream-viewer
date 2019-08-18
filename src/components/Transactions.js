@@ -1,33 +1,25 @@
 import React from 'react';
-import Outs from 'components/Outs'
+import Item from 'components/Item'
 
 export default function Transactions({ transactions }) {
   return (
     <ul className="transaction-list">
-    { transactions.map(({x}) => {
-      const {
-        hash,
-        inputs,
-        out,
-        size
-      } = x
-      console.log(x)
-
-      return (
-        <li key={hash}>
-          <div>{hash} - {size}</div>
-          <Outs
-            title="Previous Outs"
-            items={inputs}
-            prev
+      <li className="transaction-headers" key="headers">
+        <div className="tx-index">Index</div>
+        <div className="tx-prev">Prev</div>
+        <div className="tx-spent">Spent</div>
+        <div className="tx-value">Value</div>
+      </li>
+      { transactions.map((item, index) => {
+        // console.log(item)
+        return (
+          <Item
+            key={`${item.tx_index}-${item.value}`}
+            item={item}
+            index={index}
           />
-          <Outs
-            title="Outs"
-            items={out}
-          />
-        </li>
-      )
-    })}
+        )
+      })}
     </ul>
   )
 }

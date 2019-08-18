@@ -8,15 +8,16 @@ import {
   GetTrx,
   GetError,
 } from 'utils/BTCWebSocket'
+import { mergeOuts } from 'utils/BTCData'
 import Transactions from 'components/Transactions'
-import './App.css';
+import './App.scss';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      limit: 300,
+      limit: 60,
       transactions: [],
       error: undefined
     };
@@ -38,11 +39,18 @@ class App extends React.Component {
     Disconnect();
   }
 
+  markOldX = transactions => {
+    return transactions.map(trx => Object.assign({}, trx, {oldX: true}));
+  }
+
   updateTransactions = (data) => {
       this.setState((state) => {
-        let newTransactions = [data].concat(state.transactions);
+        let newTransactions = mergeOuts(data);
+        let oldTransactions = this.markOldX(state.transactions);
+        newTransactions = [].concat(newTransactions, oldTransactions);
+        
         if (newTransactions.length > this.state.limit) {
-          newTransactions = newTransactions.slice(0, this.state.limit)
+          newTransactions = newTransactions.slice(0, this.state.limit - 1)
         }
         return { transactions: newTransactions }
       });
@@ -56,10 +64,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <div>
-            <button onClick={() => this.subscribe()} >Subscribe</button>
-            <button onClick={() => this.unsubscribe()} >Unsubscribe</button>
-          </div>
+          <button type="button" onClick={() => this.subscribe()} >Subscribe</button>
+          <button onClick={() => this.unsubscribe()} >Unsubscribe</button>
         </header>
         <main>
           <Transactions transactions={this.state.transactions} />
