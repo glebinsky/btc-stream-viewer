@@ -8,6 +8,7 @@ import {
   GetTrx,
   GetError,
 } from 'utils/BTCWebSocket'
+import Transactions from 'components/Transactions'
 import './App.css';
 
 class App extends React.Component {
@@ -15,19 +16,24 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      limit: 300,
       transactions: [],
       error: undefined
     };
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe = () => {
     Connect();
     SubscribeTrx();
     GetTrx(this.updateTransactions);
     GetError(this.updateError);
   }
 
-  componentWillUnmount() {
+  unsubscribe = () => {
     UnsubscribeTrx();
     Disconnect();
   }
@@ -35,8 +41,8 @@ class App extends React.Component {
   updateTransactions = (data) => {
       this.setState((state) => {
         let newTransactions = [data].concat(state.transactions);
-        if (newTransactions.length > 20) {
-          newTransactions = newTransactions.slice(0, 20)
+        if (newTransactions.length > this.state.limit) {
+          newTransactions = newTransactions.slice(0, this.state.limit)
         }
         return { transactions: newTransactions }
       });
@@ -50,13 +56,13 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
+          <div>
+            <button onClick={() => this.subscribe()} >Subscribe</button>
+            <button onClick={() => this.unsubscribe()} >Unsubscribe</button>
+          </div>
         </header>
         <main>
-          <ul>
-          { this.state.transactions.map(trx => (
-              <Transaction key={trx.x.hash} trx={trx} />
-          ))}
-          </ul>
+          <Transactions transactions={this.state.transactions} />
           { this.state.error && <Error err={this.state.error} /> }
         </main>
       </div>
@@ -65,13 +71,6 @@ class App extends React.Component {
 }
 
 export default App;
-
-function Transaction(props) {
-  // console.log(props.trx)
-  return (
-    <li>{JSON.stringify(props.trx.x)}</li>
-  )
-}
 
 function Error(props) {
   return (
