@@ -28,36 +28,24 @@ ul {
 .transaction-headers div {
   color: yellow;
   font-weight: 700;
-  font-size: calc(4px + 2vmin);
+  font-size: 1.1em;
 }
 
 .transaction-list li:not(.transaction-headers) {
-  color: aquamarine;
-  font-weight: 900;
-  font-size: 1.2em;
-  transition-property: color, font-weight, font-size;
-  transition-duration: 1s;
+  color: white;
+  font-weight: normal;
+  font-size: .8em;
 
-  div:first-child {
-    margin-left: 20px;
-    transition-property: margin-left;
-    transition-duration: 1s;
-  }
-
-  &.old-trx {
-    color: white;
-    font-weight: normal;
+  &.new-trx {
+    color: aquamarine;
+    font-weight: 900;
     font-size: 1em;
-
-    div:first-child {
-      margin-left: 0;
-    }
   }
 }
 
 .transaction-headers,
 .transaction-list li {
-  display: table-row;
+  display: flex;
 }
 
 .transaction-headers div,
@@ -71,21 +59,21 @@ ul {
 }
 
 .tx-index {
-  width: 120px;
+  flex: 3;
 }
 
 .tx-n {
-  width: 40px;
+  flex: 1;
 }
 
 .tx-prev {
-  width: 50px;
+  flex: 2;
 }
 
 .tx-spent {
-  width: 66px;
+  flex:   2;
 }
 
 .tx-value {
-  width: 200px;
+  flex: 4;
 }

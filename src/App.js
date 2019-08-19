@@ -17,7 +17,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      limit: 60,
+      limit: 50,
       transactions: [],
       error: undefined
     };
@@ -40,17 +40,14 @@ class App extends React.Component {
     Disconnect();
   }
 
-  markedOldTransactions = (state) => {
-    return state.transactions.map(trx => ({...trx, oldX: true }))
-  }
-
   updateTransactions = (data) => {
-    this.setState((state) => {
+    this.setState(({ transactions, limit }) => {
       let newTransactions = mergeOuts(data);
-      let allTransactions = newTransactions.concat(this.markedOldTransactions(state));
-      return {
-        transactions: allTransactions.slice(0, state.limit)
-      }
+      let allTransactions = [].concat(
+        newTransactions.map(trx => ({...trx, newTrx: true })),
+        transactions.map(trx => ({...trx, newTrx: false }))
+      );
+      return { transactions: allTransactions.slice(0, limit) }
     });
   }
 

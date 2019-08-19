@@ -12,8 +12,8 @@ export default function Transactions({ transactions }) {
         <div className="tx-value">Value</div>
       </li>
       { transactions.map((item) => {
-        const key = Math.floor(Math.random() * item.tx_index)
-        console.log(item)
+        const key = Math.floor(Math.random() * Date.now())
+        console.log(key, item)
         return (
           <Item
             key={key}

@@ -1,9 +1,9 @@
 import React from 'react';
-import cn from 'classnames'
+import classnames from 'classnames'
 
 export default function Item({ item }) {
   return (
-    <li className={cn({'old-trx': item.oldX})}>
+    <li className={classnames({'new-trx': item.newTrx})}>
       <div className="tx-index">{item.tx_index}</div>
       <div className="tx-n">{item.n}</div>
       <div className="tx-prev">{item.prev ? 'Yes' : 'No'}</div>
